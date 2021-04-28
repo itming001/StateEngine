@@ -5,12 +5,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.li.state.engine.entity.Order;
 import com.li.state.engine.orderstate.annotation.OrderProcessor;
 import com.li.state.engine.orderstate.check.Checkable;
+import com.li.state.engine.orderstate.check.Checker;
 import com.li.state.engine.util.R;
 import com.li.state.engine.orderstate.context.StateContext;
 import com.li.state.engine.orderstate.template.AbstractStateProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * 订单初始化状态
@@ -68,6 +71,22 @@ public class StateCreateProcessor extends AbstractStateProcessor<Order, String> 
 
     @Override
     public Checkable getCheckable(StateContext context) {
-        return super.getCheckable(context);
+        //通过匿名内部类实现校验的信息
+        return new Checkable() {
+            @Override
+            public List<Checker> getParamChecker() {
+                return null;
+            }
+
+            @Override
+            public List<Checker> getSyncChecker() {
+                return null;
+            }
+
+            @Override
+            public List<Checker> getAsyncChecker() {
+                return null;
+            }
+        };
     }
 }

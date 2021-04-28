@@ -2,20 +2,41 @@ package com.li.state.engine.orderstate.template;
 
 import com.li.state.engine.orderstate.action.StateActionStep;
 import com.li.state.engine.orderstate.check.Checkable;
+import com.li.state.engine.orderstate.check.impl.CheckExecutor;
 import com.li.state.engine.util.R;
 import com.li.state.engine.orderstate.context.StateContext;
 import com.li.state.engine.orderstate.strategy.StateProcessor;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 状态机处理模板类
+ *
  * @author lym
  */
-public abstract class AbstractStateProcessor<T,C> implements StateProcessor<T,C>, StateActionStep<T,C> {
+@Component
+public abstract class AbstractStateProcessor<T, C> implements StateProcessor<T, C>, StateActionStep<T, C> {
+
+    /**
+     * 增加校验线程池进行异步执行
+     */
+    @Resource
+    private CheckExecutor checkExecutor;
 
     @Override
     public R<T> action(StateContext<C> context) throws Exception {
         R<T> result = null;
         try {
+            //数据校验,获取不同类型的校验信息
+            Checkable checkable = this.getCheckable(context);
+            //通过线程池进行数据校验
+            result = checkExecutor.parallelCheck(checkable.getParamChecker(), context);
+            if (result.getCode() != 0) {
+                return result;
+            }
+
             // 数据准备
             this.prepare(context);
             // 串行校验器

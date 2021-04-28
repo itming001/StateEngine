@@ -3,8 +3,10 @@ package com.li.state.engine.orderstate.check.impl;
 import com.li.state.engine.orderstate.check.Checker;
 import com.li.state.engine.util.R;
 import com.li.state.engine.orderstate.context.StateContext;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,11 +18,15 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 校验器执行器
+ * @author lym
  */
+@Component
 public class CheckExecutor<T,C> {
-
-    private ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 1, TimeUnit.HOURS, new LinkedBlockingQueue<>(1024));
-
+    /**
+     * 注入自定义线程池的配置
+     */
+    @Resource
+    private ThreadPoolExecutor executor;
     /**
      * 执行并行校验器，
      * 按照任务投递的顺序判断返回。
