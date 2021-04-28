@@ -5,6 +5,7 @@ import com.li.state.engine.entity.Order;
 import com.li.state.engine.orderstate.context.StateContext;
 import com.li.state.engine.orderstate.registry.DefaultStateProcessRegistry;
 import com.li.state.engine.orderstate.template.AbstractStateProcessor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ import java.util.Map;
  * @author lym
  */
 @RestController
+@Slf4j
 public class OrderController {
 
     @Resource

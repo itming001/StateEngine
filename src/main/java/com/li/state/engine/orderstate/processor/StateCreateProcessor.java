@@ -1,6 +1,7 @@
 package com.li.state.engine.orderstate.processor;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.li.state.engine.entity.Order;
 import com.li.state.engine.orderstate.annotation.OrderProcessor;
 import com.li.state.engine.orderstate.check.Checkable;
@@ -56,6 +57,7 @@ public class StateCreateProcessor extends AbstractStateProcessor<Order, String> 
     @Override
     public R save(String nextState, StateContext context) throws Exception {
         log.info("-----save-----将订单进行落库处理");
+        log.info("获取订单上下文信息：{}",JSONObject.toJSONString(context));
         return R.ok();
     }
 

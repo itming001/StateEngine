@@ -21,8 +21,6 @@ package com.li.state.engine.util;
 
 
 import com.li.state.engine.constant.CommonConstants;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,24 +40,24 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@ApiModel(value = "响应信息主体")
+//@ApiModel(value = "响应信息主体")
 public class R<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Getter
 	@Setter
-	@ApiModelProperty(value = "返回标记：成功标记=0，失败标记=1")
+//	@ApiModelProperty(value = "返回标记：成功标记=0，失败标记=1")
 	private int code;
 
 	@Getter
 	@Setter
-	@ApiModelProperty(value = "返回信息")
+//	@ApiModelProperty(value = "返回信息")
 	private String msg;
 
 
 	@Getter
 	@Setter
-	@ApiModelProperty(value = "数据")
+//	@ApiModelProperty(value = "数据")
 	private T data;
 
 	public static <T> R<T> ok() {
